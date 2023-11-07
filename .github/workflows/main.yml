@@ -27,7 +27,7 @@ jobs:
           docker build \
             --cache-from ${{ env.IMAGE }}:latest \
             --tag ${{ env.IMAGE }}:latest \
-            --file ./project/Dockerfile.prod \
+            --file ./project/Dockerfile \
             "./app"
       - name: Push image
         run: |
