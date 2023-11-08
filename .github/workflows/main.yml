@@ -2,7 +2,7 @@ name: Continuous Integration
 
 on: [push]
 
-permissions: read-all|write-all
+permissions: write-all
 
 env:
   IMAGE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[A-Z]' '[a-z]')/ci_test
