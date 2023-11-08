@@ -4,9 +4,7 @@ app_name = "press"
 
 
 urlpatterns = [
-    path(
-        "api/press",
-    ),
+    path("api/press",),
     path("api/press/<int:pk>/"),
     path("api/press/<int:pk/journalist"),
     path("api/press/<int:pk/age"),
