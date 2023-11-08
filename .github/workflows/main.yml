@@ -3,7 +3,7 @@ name: Continuous Integration
 on: [push]
 
 env:
-  IMAGE: ghcr.io/thepressleaderboard/$(echo $GITHUB_REPOSITORY | tr '[A-Z]' '[a-z]')/ci_test
+  IMAGE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[A-Z]' '[a-z]')/ci_test
 
 jobs:
 
@@ -60,7 +60,7 @@ jobs:
       - name: Run container
         run: |
           docker run \
-            -d \
+            -itd \
             --name press_leaderboard \
             -p 8555:8000 \
             ${{ env.IMAGE }}:latest bash
