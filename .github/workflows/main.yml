@@ -2,6 +2,8 @@ name: Continuous Integration
 
 on: [push]
 
+permissions: read-all|write-all
+
 env:
   IMAGE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[A-Z]' '[a-z]')/ci_test
 
@@ -10,7 +12,6 @@ jobs:
   build:
     name: Build Docker Image
     runs-on: ubuntu-latest
-    permissions: write-all
     steps:
       - name: Checkout
         uses: actions/checkout@v3
