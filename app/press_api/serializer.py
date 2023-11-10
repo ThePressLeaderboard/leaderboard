@@ -1,10 +1,18 @@
 from rest_framework import serializers
-from press.models import Press, Journalist
+from press.models import Category, Press, Journalist
+
+
+class CategorySerializer(serializers.ModelSerializer):
+    subscriber_count = serializers.IntegerField()
+    
+    
+    class Meta:
+        model = Category
+        fields = '__all__'
 
 
 class PressSerializer(serializers.ModelSerializer):
     subscriber_count = serializers.IntegerField()
-    cheer_count = serializers.IntegerField()
 
     class Meta:
         model = Press
