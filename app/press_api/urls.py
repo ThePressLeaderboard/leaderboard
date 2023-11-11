@@ -1,10 +1,19 @@
 from django.urls import path
 
-from .views import (CategoryDetail, CategoryJournalistRanking,
-                    CategoryPressRanking, CategoryRanking, JournalistDetail,
-                    JournalistRanking, PressDetail, PressJournallistRanking,
-                    PressRanking, SectionDetail, SectionJournallistRanking,
-                    SectionRanking)
+from .views import (
+    CategoryDetail,
+    CategoryJournalistRanking,
+    CategoryPressRanking,
+    CategoryRanking,
+    JournalistDetail,
+    JournalistRanking,
+    PressDetail,
+    PressJournallistRanking,
+    PressRanking,
+    SectionDetail,
+    SectionJournallistRanking,
+    SectionRanking,
+)
 
 urlpatterns = [
     path("category", CategoryRanking.as_view(), name="categoryranking"),

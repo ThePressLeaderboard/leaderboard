@@ -1,10 +1,18 @@
 from rest_framework import generics
 from rest_framework.pagination import PageNumberPagination
 
-from .queryset import (category_query_set, journalist_query_set,
-                       press_query_set, secion_query_set)
-from .serializer import (CategorySerializer, JournalistSeriallizer,
-                         PressSerializer, SectionSerializer)
+from .queryset import (
+    category_query_set,
+    journalist_query_set,
+    press_query_set,
+    secion_query_set,
+)
+from .serializer import (
+    CategorySerializer,
+    JournalistSeriallizer,
+    PressSerializer,
+    SectionSerializer,
+)
 
 
 class CategoryRanking(generics.ListCreateAPIView):
