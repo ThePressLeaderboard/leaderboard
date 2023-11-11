@@ -1,12 +1,16 @@
 from django.urls import path
-from .views import *
+from .views import CategoryRanking, CategoryDetail, CategoryPressRanking, CategoryJournalistRanking
+from .views import PressRanking, PressDetail, PressJournallistRanking
+from .views import SectionRanking, SectionDetail, SectionJournallistRanking
+from .views import JournalistRanking, JournalistDetail
 
 
 urlpatterns = [
     path('category', CategoryRanking.as_view(), name='categoryranking'),
     path('category/<str:category_name>', CategoryDetail.as_view(), name='categorydetail'),
     path('category/<str:category_name>/press', CategoryPressRanking.as_view(), name='categorypressranking'),
-    path('category/<str:category_name>/journalist', CategoryJournalistRanking.as_view(), name='categoryjournliastranking'),
+    path('category/<str:category_name>/journalist', CategoryJournalistRanking.as_view(),
+         name='categoryjournliastranking'),
     path('press', PressRanking.as_view(), name='pressranking'),
     path('press/<str:press_name>', PressDetail.as_view(), name='pressdetail'),
     path('press/<str:press_name>/journalist', PressJournallistRanking.as_view(), name='pressjournalistranking'),

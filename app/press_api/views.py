@@ -1,14 +1,12 @@
 from rest_framework import generics
-from .serializer import *
-from press.models import *
+from .serializer import CategorySerializer, PressSerializer, SectionSerializer, JournalistSeriallizer
 from rest_framework.pagination import PageNumberPagination
-from .queryset import *
+from .queryset import category_query_set, press_query_set, secion_query_set, journalist_query_set
 
 
 class CategoryRanking(generics.ListCreateAPIView):
     serializer_class = CategorySerializer
     pagination_class = PageNumberPagination
-
 
     def get_queryset(self):
         sort = self.request.GET.get('sort', 'id')
@@ -18,7 +16,7 @@ class CategoryRanking(generics.ListCreateAPIView):
             sort = '-' + sort
         qs = category_query_set.order_by(sort)[:number]
         return qs
-    
+
 
 class CategoryDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = category_query_set
@@ -30,14 +28,13 @@ class CategoryPressRanking(generics.ListAPIView):
     serializer_class = PressSerializer
     pagination_class = PageNumberPagination
 
-
     def get_queryset(self):
         sort = self.request.GET.get('sort', 'id')
         number = self.request.GET.get('number', 10)
         number = int(number)
         if sort != 'id':
             sort = '-' + sort
-        qs = Press_query_set
+        qs = press_query_set
         qs = qs.filter(category__category_name=self.kwargs['category_name']).order_by(sort)[:number]
         return qs
 
@@ -46,14 +43,13 @@ class CategoryJournalistRanking(generics.ListAPIView):
     serializer_class = JournalistSeriallizer
     pagination_class = PageNumberPagination
 
-
     def get_queryset(self):
         sort = self.request.GET.get('sort', 'id')
         number = self.request.GET.get('number', 1000000)
         number = int(number)
         if sort != 'id':
             sort = '-' + sort
-        qs = Journalist_query_set
+        qs = journalist_query_set
         qs = qs.filter(press__category__category_name=self.kwargs['category_name']).order_by(sort)[:number]
         return qs
 
@@ -62,19 +58,18 @@ class PressRanking(generics.ListCreateAPIView):
     serializer_class = PressSerializer
     pagination_class = PageNumberPagination
 
-    
     def get_queryset(self):
         sort = self.request.GET.get('sort', 'id')
         number = self.request.GET.get('number', 1000000)
         number = int(number)
         if sort != 'id':
             sort = '-' + sort
-        qs = Press_query_set.order_by(sort)[:number]
+        qs = press_query_set.order_by(sort)[:number]
         return qs
 
 
 class PressDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Press_query_set
+    queryset = press_query_set
     serializer_class = PressSerializer
     lookup_field = 'press_name'
 
@@ -83,14 +78,13 @@ class PressJournallistRanking(generics.ListAPIView):
     serializer_class = JournalistSeriallizer
     pagination_class = PageNumberPagination
 
-
     def get_queryset(self):
         sort = self.request.GET.get('sort', 'id')
         number = self.request.GET.get('number', 1000000)
         number = int(number)
         if sort != 'id':
             sort = '-' + sort
-        qs = Journalist_query_set
+        qs = journalist_query_set
         qs = qs.filter(press__press_name=self.kwargs['press_name']).order_by(sort)[:number]
         return qs
 
@@ -99,7 +93,6 @@ class SectionRanking(generics.ListCreateAPIView):
     serializer_class = SectionSerializer
     pagination_class = PageNumberPagination
 
-    
     def get_queryset(self):
         sort = self.request.GET.get('sort', 'id')
         number = self.request.GET.get('number', 1000000)
@@ -120,14 +113,13 @@ class SectionJournallistRanking(generics.ListAPIView):
     serializer_class = JournalistSeriallizer
     pagination_class = PageNumberPagination
 
-
     def get_queryset(self):
         sort = self.request.GET.get('sort', 'id')
         number = self.request.GET.get('number', 1000000)
         number = int(number)
         if sort != 'id':
             sort = '-' + sort
-        qs = Journalist_query_set
+        qs = journalist_query_set
         qs = qs.filter(journalistsection__section__section_name=self.kwargs['section_name']).order_by(sort)[:number]
         return qs
 
@@ -135,7 +127,6 @@ class SectionJournallistRanking(generics.ListAPIView):
 class JournalistRanking(generics.ListCreateAPIView):
     serializer_class = JournalistSeriallizer
     pagination_class = PageNumberPagination
-    
 
     def get_queryset(self):
         sort = self.request.GET.get('sort', 'id')
@@ -143,11 +134,11 @@ class JournalistRanking(generics.ListCreateAPIView):
         number = int(number)
         if sort != 'id':
             sort = '-' + sort
-        qs = Journalist_query_set.order_by(sort)[:number]
+        qs = journalist_query_set.order_by(sort)[:number]
         return qs
 
 
 class JournalistDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Journalist_query_set
+    queryset = journalist_query_set
     serializer_class = JournalistSeriallizer
     lookup_field = 'journalist_id'

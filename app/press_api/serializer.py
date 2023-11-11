@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from press.models import *
+from press.models import Category, Press, Section, Journalist
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -7,7 +7,6 @@ class CategorySerializer(serializers.ModelSerializer):
     cheer_count = serializers.IntegerField()
     male_subscriber = serializers.IntegerField()
     female_subscriber = serializers.IntegerField()
-    
 
     class Meta:
         model = Category
@@ -20,18 +19,16 @@ class PressSerializer(serializers.ModelSerializer):
     male_subscriber = serializers.IntegerField()
     female_subscriber = serializers.IntegerField()
 
-
     class Meta:
         model = Press
-        fields = ('category', 'press_name', 'subscriber_count', 'cheer_count', 'male_subscriber', 'female_subscriber' )
-        
+        fields = ('category', 'press_name', 'subscriber_count', 'cheer_count', 'male_subscriber', 'female_subscriber')
+
 
 class SectionSerializer(serializers.ModelSerializer):
     subscriber_count = serializers.IntegerField()
     cheer_count = serializers.IntegerField()
     male_subscriber = serializers.IntegerField()
     female_subscriber = serializers.IntegerField()
-
 
     class Meta:
         model = Section
@@ -41,8 +38,8 @@ class SectionSerializer(serializers.ModelSerializer):
 class JournalistSeriallizer(serializers.ModelSerializer):
     male_subscriber = serializers.IntegerField()
     female_subscriber = serializers.IntegerField()
-    
-    
+
     class Meta:
         model = Journalist
-        fields = ('press', 'journalist_id', 'name', 'subscriber_count', 'article_count', 'cheer_count', 'male_subscriber', 'female_subscriber')
+        fields = ('press', 'journalist_id', 'name', 'subscriber_count', 'article_count',
+                  'cheer_count', 'male_subscriber', 'female_subscriber')
