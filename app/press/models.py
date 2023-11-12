@@ -12,6 +12,7 @@ class Press(models.Model):
         on_delete=models.CASCADE,
         to_field="category_name",
         db_column="category_name",
+        related_name="press",
     )
 
 
@@ -22,7 +23,11 @@ class Journalist(models.Model):
     article_count = models.IntegerField(default=0)
     cheer_count = models.IntegerField(default=0)
     press = models.ForeignKey(
-        Press, on_delete=models.CASCADE, to_field="press_name", db_column="press_name"
+        Press,
+        on_delete=models.CASCADE,
+        to_field="press_name",
+        db_column="press_name",
+        related_name="journalist",
     )
 
 
@@ -34,6 +39,7 @@ class Gender(models.Model):
         on_delete=models.CASCADE,
         to_field="journalist_id",
         db_column="journalist_id",
+        related_name="gender",
     )
 
 
@@ -45,6 +51,7 @@ class Age(models.Model):
         on_delete=models.CASCADE,
         to_field="journalist_id",
         db_column="journalist_id",
+        related_name="age",
     )
 
 
@@ -58,12 +65,14 @@ class JournalistSection(models.Model):
         on_delete=models.CASCADE,
         to_field="journalist_id",
         db_column="journalist_id",
+        related_name="journalistsection",
     )
     section = models.ForeignKey(
         Section,
         on_delete=models.CASCADE,
         to_field="section_name",
         db_column="section_name",
+        related_name="journalistsection",
     )
 
     class Meta:
