@@ -7,8 +7,11 @@ from .views import (
     CategoryPressRanking,
     CategoryRanking,
     CategoryWiseAgePressRanking,
+    FemalePressRanking,
     JournalistDetail,
+    JournalistGenderDetail,
     JournalistRanking,
+    MalePressRanking,
     PressDetail,
     PressJournallistRanking,
     PressRanking,
@@ -73,5 +76,16 @@ urlpatterns = [
         "press/<str:press_name>/age/",
         TotalAgeByPress.as_view(),
         name="age-distribution-by-press-name",
+    ),
+    path("press/ranking/male", MalePressRanking.as_view(), name="male-press-ranking"),
+    path(
+        "press/ranking/female",
+        FemalePressRanking.as_view(),
+        name="female-press-ranking",
+    ),
+    path(
+        "journalist/<int:journalist_id>/gender",
+        JournalistGenderDetail.as_view(),
+        name="journalist-gender-detail",
     ),
 ]

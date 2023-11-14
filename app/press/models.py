@@ -77,4 +77,3 @@ class JournalistSection(models.Model):
 
     class Meta:
         unique_together = (("journalist", "section"),)
-        unique_together = (("journalist", "section"),)

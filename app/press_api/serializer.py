@@ -1,6 +1,14 @@
 from rest_framework import serializers
 
-from press.models import Age, Category, Journalist, JournalistSection, Press, Section
+from press.models import (
+    Age,
+    Category,
+    Gender,
+    Journalist,
+    JournalistSection,
+    Press,
+    Section,
+)
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -146,3 +154,28 @@ class AgeRankingByCategorySerializer(serializers.Serializer):
 class PressAgeSerializer(serializers.Serializer):
     age = serializers.IntegerField()
     total_subscribers = serializers.IntegerField()
+
+
+class GenderSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Gender
+        fields = "__all__"
+        read_only_fields = ("id",)
+
+
+class JournalistsSerializer(serializers.ModelSerializer):
+    Gender = GenderSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Journalist
+        fields = "__all__"
+        read_only_fields = ("id",)
+
+
+class PressGenderSerializer(serializers.ModelSerializer):
+    Journalists = JournalistsSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Press
+        fields = "__all__"
+        read_only_fields = ("id",)

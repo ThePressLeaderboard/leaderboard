@@ -4,25 +4,19 @@ from rest_framework import generics
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from rest_framework.views import APIView
-
-from press.models import Age, Category, Press, models
+from press.models import Age, Category, Gender, Journalist, Press, models
+from press_api.pagination import PostPageNumberPagination
 from press_api.serializer import (
     AgeRankingByCategorySerializer,
     CategorySerializer,
     JournalistSerializer,
     PressAgeSerializer,
+    PressGenderSerializer,
     PressSerializer,
     PressSubscriberAgeSerializer,
     SectionSerializer,
 )
-
-from .pagination import PostPageNumberPagination
-from .queryset import (
-    category_query_set,
-    journalist_query_set,
-    press_query_set,
-    secion_query_set,
-)
+from .queryset import (category_query_set, journalist_query_set, press_query_set, secion_query_set)
 
 
 class CategoryRanking(generics.ListCreateAPIView):
@@ -344,3 +338,48 @@ class TotalAgeByPress(generics.RetrieveAPIView):
             )
 
         return Response(result)
+
+
+class MalePressRanking(generics.ListAPIView):
+    queryset = Press.objects.all()
+    serializer_class = PressGenderSerializer
+
+    def get_queryset(self):
+        queryset = Press.objects.annotate(
+            male_subscriber_count=Sum(
+                F("journalist__subscriber_count")
+                * F("journalist__gender__percentage")
+                / 100,
+                output_field=models.IntegerField(),
+                filter=models.Q(journalist__gender__gender="M"),
+            )
+        ).order_by("-male_subscriber_count")[:10]
+
+        return queryset
+
+
+class FemalePressRanking(generics.ListAPIView):
+    queryset = Press.objects.all()
+    serializer_class = PressGenderSerializer
+
+    def get_queryset(self):
+        queryset = Press.objects.annotate(
+            male_subscriber_count=Sum(
+                F("journalist__subscriber_count")
+                * F("journalist__gender__percentage")
+                / 100,
+                output_field=models.IntegerField(),
+                filter=models.Q(journalist__gender__gender="F"),
+            )
+        ).order_by("-male_subscriber_count")[:10]
+        return queryset
+
+
+class JournalistGenderDetail(generics.ListAPIView):
+    queryset = Journalist.objects.all()
+    serializer_class = PressGenderSerializer
+
+    def get_queryset(self):
+        journalist_id = self.kwargs.get("pk")
+        queryset = Gender.objects.filter(journalist_id=journalist_id)
+        return queryset
