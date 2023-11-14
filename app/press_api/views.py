@@ -213,7 +213,6 @@ class AgePressRanking(generics.ListAPIView):
     serializer_class = AgeRankingByCategorySerializer
     pagination_class = PostPageNumberPagination
 
-    
     def get_queryset(self):
         age_ranges = [10, 20, 30, 40, 50, 60]
         result = []
@@ -274,7 +273,7 @@ class CategoryWiseAgePressRanking(APIView):
     paginatoin_class = PostPageNumberPagination
 
     def get(self, request):
-        age = request.query_params.get('age')
+        age = request.query_params.get("age")
 
         if age is not None:
             age_ranges = [int(age)]

@@ -67,39 +67,27 @@ press_query_set = Press.objects.annotate(
         filter=models.Q(journalist__gender__gender="F"),
     ),
     teen_subscriber=Sum(
-        F("journalist__subscriber_count")
-        * F("journalist__age__percentage")
-        / 100,
+        F("journalist__subscriber_count") * F("journalist__age__percentage") / 100,
         filter=models.Q(journalist__age__age="10"),
     ),
     twenty_subscriber=Sum(
-        F("journalist__subscriber_count")
-        * F("journalist__age__percentage")
-        / 100,
+        F("journalist__subscriber_count") * F("journalist__age__percentage") / 100,
         filter=models.Q(journalist__age__age="20"),
     ),
     thirty_subscriber=Sum(
-        F("journalist__subscriber_count")
-        * F("journalist__age__percentage")
-        / 100,
+        F("journalist__subscriber_count") * F("journalist__age__percentage") / 100,
         filter=models.Q(journalist__age__age="30"),
     ),
     forty_subscriber=Sum(
-        F("journalist__subscriber_count")
-        * F("journalist__age__percentage")
-        / 100,
+        F("journalist__subscriber_count") * F("journalist__age__percentage") / 100,
         filter=models.Q(journalist__age__age="40"),
     ),
     fifty_subscriber=Sum(
-        F("journalist__subscriber_count")
-        * F("journalist__age__percentage")
-        / 100,
+        F("journalist__subscriber_count") * F("journalist__age__percentage") / 100,
         filter=models.Q(journalist__age__age="50"),
     ),
     sixty_subscriber=Sum(
-        F("journalist__subscriber_count")
-        * F("journalist__age__percentage")
-        / 100,
+        F("journalist__subscriber_count") * F("journalist__age__percentage") / 100,
         filter=models.Q(journalist__age__age="60"),
     ),
     subscriber_count=Sum("journalist__subscriber_count"),
@@ -170,39 +158,27 @@ journalist_query_set = Journalist.objects.annotate(
         filter=models.Q(gender__gender="F"),
     ),
     teen_subscriber=Sum(
-        F("subscriber_count")
-        * F("age__percentage")
-        / 100,
+        F("subscriber_count") * F("age__percentage") / 100,
         filter=models.Q(age__age="10"),
     ),
     twenty_subscriber=Sum(
-        F("subscriber_count")
-        * F("age__percentage")
-        / 100,
+        F("subscriber_count") * F("age__percentage") / 100,
         filter=models.Q(age__age="20"),
     ),
     thirty_subscriber=Sum(
-        F("subscriber_count")
-        * F("age__percentage")
-        / 100,
+        F("subscriber_count") * F("age__percentage") / 100,
         filter=models.Q(age__age="30"),
     ),
     forty_subscriber=Sum(
-        F("subscriber_count")
-        * F("age__percentage")
-        / 100,
+        F("subscriber_count") * F("age__percentage") / 100,
         filter=models.Q(age__age="40"),
     ),
     fifty_subscriber=Sum(
-        F("subscriber_count")
-        * F("age__percentage")
-        / 100,
+        F("subscriber_count") * F("age__percentage") / 100,
         filter=models.Q(age__age="50"),
     ),
     sixty_subscriber=Sum(
-        F("subscriber_count")
-        * F("age__percentage")
-        / 100,
+        F("subscriber_count") * F("age__percentage") / 100,
         filter=models.Q(age__age="60"),
     ),
 )

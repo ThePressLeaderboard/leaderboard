@@ -28,7 +28,7 @@ class CategorySerializer(serializers.ModelSerializer):
             "thirty_subscriber",
             "forty_subscriber",
             "fifty_subscriber",
-            "sixty_subscriber"
+            "sixty_subscriber",
         )
 
 
@@ -44,7 +44,6 @@ class PressSerializer(serializers.ModelSerializer):
     fifty_subscriber = serializers.IntegerField()
     sixty_subscriber = serializers.IntegerField()
 
-
     class Meta:
         model = Press
         fields = (
@@ -59,7 +58,7 @@ class PressSerializer(serializers.ModelSerializer):
             "thirty_subscriber",
             "forty_subscriber",
             "fifty_subscriber",
-            "sixty_subscriber"
+            "sixty_subscriber",
         )
 
 
@@ -88,7 +87,7 @@ class SectionSerializer(serializers.ModelSerializer):
             "thirty_subscriber",
             "forty_subscriber",
             "fifty_subscriber",
-            "sixty_subscriber"
+            "sixty_subscriber",
         )
 
 
@@ -118,7 +117,7 @@ class JournalistSerializer(serializers.ModelSerializer):
             "thirty_subscriber",
             "forty_subscriber",
             "fifty_subscriber",
-            "sixty_subscriber"
+            "sixty_subscriber",
         )
 
 
