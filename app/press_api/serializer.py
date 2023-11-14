@@ -8,6 +8,12 @@ class CategorySerializer(serializers.ModelSerializer):
     cheer_count = serializers.IntegerField()
     male_subscriber = serializers.IntegerField()
     female_subscriber = serializers.IntegerField()
+    teen_subscriber = serializers.IntegerField()
+    twenty_subscriber = serializers.IntegerField()
+    thirty_subscriber = serializers.IntegerField()
+    forty_subscriber = serializers.IntegerField()
+    fifty_subscriber = serializers.IntegerField()
+    sixty_subscriber = serializers.IntegerField()
 
     class Meta:
         model = Category
@@ -17,6 +23,12 @@ class CategorySerializer(serializers.ModelSerializer):
             "cheer_count",
             "male_subscriber",
             "female_subscriber",
+            "teen_subscriber",
+            "twenty_subscriber",
+            "thirty_subscriber",
+            "forty_subscriber",
+            "fifty_subscriber",
+            "sixty_subscriber"
         )
 
 
@@ -25,6 +37,13 @@ class PressSerializer(serializers.ModelSerializer):
     cheer_count = serializers.IntegerField()
     male_subscriber = serializers.IntegerField()
     female_subscriber = serializers.IntegerField()
+    teen_subscriber = serializers.IntegerField()
+    twenty_subscriber = serializers.IntegerField()
+    thirty_subscriber = serializers.IntegerField()
+    forty_subscriber = serializers.IntegerField()
+    fifty_subscriber = serializers.IntegerField()
+    sixty_subscriber = serializers.IntegerField()
+
 
     class Meta:
         model = Press
@@ -35,6 +54,12 @@ class PressSerializer(serializers.ModelSerializer):
             "cheer_count",
             "male_subscriber",
             "female_subscriber",
+            "teen_subscriber",
+            "twenty_subscriber",
+            "thirty_subscriber",
+            "forty_subscriber",
+            "fifty_subscriber",
+            "sixty_subscriber"
         )
 
 
@@ -43,6 +68,12 @@ class SectionSerializer(serializers.ModelSerializer):
     cheer_count = serializers.IntegerField()
     male_subscriber = serializers.IntegerField()
     female_subscriber = serializers.IntegerField()
+    teen_subscriber = serializers.IntegerField()
+    twenty_subscriber = serializers.IntegerField()
+    thirty_subscriber = serializers.IntegerField()
+    forty_subscriber = serializers.IntegerField()
+    fifty_subscriber = serializers.IntegerField()
+    sixty_subscriber = serializers.IntegerField()
 
     class Meta:
         model = Section
@@ -52,12 +83,24 @@ class SectionSerializer(serializers.ModelSerializer):
             "cheer_count",
             "male_subscriber",
             "female_subscriber",
+            "teen_subscriber",
+            "twenty_subscriber",
+            "thirty_subscriber",
+            "forty_subscriber",
+            "fifty_subscriber",
+            "sixty_subscriber"
         )
 
 
 class JournalistSeriallizer(serializers.ModelSerializer):
     male_subscriber = serializers.IntegerField()
     female_subscriber = serializers.IntegerField()
+    teen_subscriber = serializers.IntegerField()
+    twenty_subscriber = serializers.IntegerField()
+    thirty_subscriber = serializers.IntegerField()
+    forty_subscriber = serializers.IntegerField()
+    fifty_subscriber = serializers.IntegerField()
+    sixty_subscriber = serializers.IntegerField()
 
     class Meta:
         model = Journalist
@@ -70,4 +113,10 @@ class JournalistSeriallizer(serializers.ModelSerializer):
             "cheer_count",
             "male_subscriber",
             "female_subscriber",
+            "teen_subscriber",
+            "twenty_subscriber",
+            "thirty_subscriber",
+            "forty_subscriber",
+            "fifty_subscriber",
+            "sixty_subscriber"
         )
