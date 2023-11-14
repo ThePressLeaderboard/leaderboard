@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from press.models import Category, Journalist, Press, Section
+from press.models import Category, Journalist, JournalistSection, Press, Section, Age
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -92,7 +92,7 @@ class SectionSerializer(serializers.ModelSerializer):
         )
 
 
-class JournalistSeriallizer(serializers.ModelSerializer):
+class JournalistSerializer(serializers.ModelSerializer):
     male_subscriber = serializers.IntegerField()
     female_subscriber = serializers.IntegerField()
     teen_subscriber = serializers.IntegerField()
@@ -120,3 +120,30 @@ class JournalistSeriallizer(serializers.ModelSerializer):
             "fifty_subscriber",
             "sixty_subscriber"
         )
+
+
+class PressSubscriberAgeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Age
+        fields = ["age", "percentage", "journalist_id"]
+
+
+class PressJournalistSectionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = JournalistSection
+        fields = ["id", "journalist_id", "section_name"]
+
+
+class PressRankingSerializer(serializers.Serializer):
+    press_name = serializers.CharField()
+    count = serializers.IntegerField()
+
+
+class AgeRankingByCategorySerializer(serializers.Serializer):
+    age_group = serializers.CharField()
+    press_ranking = PressRankingSerializer(many=True)
+
+
+class PressAgeSerializer(serializers.Serializer):
+    age = serializers.IntegerField()
+    total_subscribers = serializers.IntegerField()

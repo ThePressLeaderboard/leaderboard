@@ -21,5 +21,4 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('press/', include('press.urls')),
     path('press_api/', include('press_api.urls')),
-    path('rest/', include('press_api.urls'))
 ]

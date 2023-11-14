@@ -11,7 +11,7 @@ from press.models import (
     Age,
     models,
 )
-from press_api.serializers import (
+from press_api.serializer import (
     AgeRankingByCategorySerializer,
     CategorySerializer,
     PressSerializer,
@@ -19,7 +19,6 @@ from press_api.serializers import (
     PressSubscriberAgeSerializer,
     PressAgeSerializer,
     CategorySerializer,
-    JournalistSerializer,
     PressSerializer,
     SectionSerializer,
 )
