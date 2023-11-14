@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from press.models import Category, Journalist, JournalistSection, Press, Section, Age
+from press.models import Age, Category, Journalist, JournalistSection, Press, Section
 
 
 class CategorySerializer(serializers.ModelSerializer):

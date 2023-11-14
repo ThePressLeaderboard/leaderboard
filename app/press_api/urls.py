@@ -1,13 +1,12 @@
 from django.urls import path
+
 from .views import (
-    SubscriberAgeDetail,
-    TotalAgeByPress,
     AgePressRanking,
-    CategoryWiseAgePressRanking,
     CategoryDetail,
     CategoryJournalistRanking,
     CategoryPressRanking,
     CategoryRanking,
+    CategoryWiseAgePressRanking,
     JournalistDetail,
     JournalistRanking,
     PressDetail,
@@ -16,8 +15,9 @@ from .views import (
     SectionDetail,
     SectionJournallistRanking,
     SectionRanking,
+    SubscriberAgeDetail,
+    TotalAgeByPress,
 )
-
 
 urlpatterns = [
     path("category/", CategoryRanking.as_view(), name="categoryranking"),

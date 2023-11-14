@@ -1,37 +1,28 @@
-from django.db.models import F, Case, Sum, Value, When
-from django.shortcuts import render
+from django.db.models import Case, F, Sum, Value, When
 from django.db.models.functions import Coalesce
 from rest_framework import generics
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from press.models import (
-    Category,
-    Press,
-    Journalist,
-    Age,
-    models,
-)
+
+from press.models import Age, Category, Press, models
 from press_api.serializer import (
     AgeRankingByCategorySerializer,
     CategorySerializer,
-    PressSerializer,
     JournalistSerializer,
-    PressSubscriberAgeSerializer,
     PressAgeSerializer,
-    CategorySerializer,
     PressSerializer,
+    PressSubscriberAgeSerializer,
     SectionSerializer,
 )
-from rest_framework.pagination import PageNumberPagination
 
+from .pagination import PostPageNumberPagination
 from .queryset import (
     category_query_set,
     journalist_query_set,
     press_query_set,
     secion_query_set,
 )
-
-from .pagination import PostPageNumberPagination
 
 
 class CategoryRanking(generics.ListCreateAPIView):
