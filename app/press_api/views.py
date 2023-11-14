@@ -18,44 +18,168 @@ from press_api.serializers import (
     JournalistSerializer,
     PressSubscriberAgeSerializer,
     PressAgeSerializer,
+    CategorySerializer,
+    JournalistSerializer,
+    PressSerializer,
+    SectionSerializer,
 )
+from rest_framework.pagination import PageNumberPagination
+
+from .queryset import (
+    category_query_set,
+    journalist_query_set,
+    press_query_set,
+    secion_query_set,
+)
+
 from .pagination import PostPageNumberPagination
 
 
-class CategoryList(generics.ListAPIView):
-    queryset = Category.objects.all()
+class CategoryRanking(generics.ListCreateAPIView):
     serializer_class = CategorySerializer
-    pagination_class = PostPageNumberPagination
+    pagination_class = PageNumberPagination
+
+    def get_queryset(self):
+        sort = self.request.GET.get("sort", "id")
+        number = self.request.GET.get("number", 1000000)
+        number = int(number)
+        if sort != "id":
+            sort = "-" + sort
+        qs = category_query_set.order_by(sort)[:number]
+        return qs
 
 
 class CategoryDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Category.objects.all()
+    queryset = category_query_set
     serializer_class = CategorySerializer
-    pagination_class = PostPageNumberPagination
+    lookup_field = "category_name"
 
 
-class PressList(generics.ListCreateAPIView):
-    queryset = Press.objects.all()
+class CategoryPressRanking(generics.ListAPIView):
     serializer_class = PressSerializer
-    pagination_class = PostPageNumberPagination
+    pagination_class = PageNumberPagination
+
+    def get_queryset(self):
+        sort = self.request.GET.get("sort", "id")
+        number = self.request.GET.get("number", 10)
+        number = int(number)
+        if sort != "id":
+            sort = "-" + sort
+        qs = press_query_set
+        qs = qs.filter(category__category_name=self.kwargs["category_name"]).order_by(
+            sort
+        )[:number]
+        return qs
+
+
+class CategoryJournalistRanking(generics.ListAPIView):
+    serializer_class = JournalistSerializer
+    pagination_class = PageNumberPagination
+
+    def get_queryset(self):
+        sort = self.request.GET.get("sort", "id")
+        number = self.request.GET.get("number", 1000000)
+        number = int(number)
+        if sort != "id":
+            sort = "-" + sort
+        qs = journalist_query_set
+        qs = qs.filter(
+            press__category__category_name=self.kwargs["category_name"]
+        ).order_by(sort)[:number]
+        return qs
+
+
+class PressRanking(generics.ListCreateAPIView):
+    serializer_class = PressSerializer
+    pagination_class = PageNumberPagination
+
+    def get_queryset(self):
+        sort = self.request.GET.get("sort", "id")
+        number = self.request.GET.get("number", 1000000)
+        number = int(number)
+        if sort != "id":
+            sort = "-" + sort
+        qs = press_query_set.order_by(sort)[:number]
+        return qs
 
 
 class PressDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Press.objects.all()
+    queryset = press_query_set
     serializer_class = PressSerializer
-    pagination_class = PostPageNumberPagination
+    lookup_field = "press_name"
 
 
-class JournalistList(generics.ListCreateAPIView):
-    queryset = Journalist.objects.all()
+class PressJournallistRanking(generics.ListAPIView):
     serializer_class = JournalistSerializer
-    pagination_class = PostPageNumberPagination
+    pagination_class = PageNumberPagination
+
+    def get_queryset(self):
+        sort = self.request.GET.get("sort", "id")
+        number = self.request.GET.get("number", 1000000)
+        number = int(number)
+        if sort != "id":
+            sort = "-" + sort
+        qs = journalist_query_set
+        qs = qs.filter(press__press_name=self.kwargs["press_name"]).order_by(sort)[
+            :number
+        ]
+        return qs
+
+
+class SectionRanking(generics.ListCreateAPIView):
+    serializer_class = SectionSerializer
+    pagination_class = PageNumberPagination
+
+    def get_queryset(self):
+        sort = self.request.GET.get("sort", "id")
+        number = self.request.GET.get("number", 1000000)
+        number = int(number)
+        if sort != "id":
+            sort = "-" + sort
+        qs = secion_query_set.order_by(sort)[:number]
+        return qs
+
+
+class SectionDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = secion_query_set
+    serializer_class = SectionSerializer
+    lookup_field = "section_name"
+
+
+class SectionJournallistRanking(generics.ListAPIView):
+    serializer_class = JournalistSerializer
+    pagination_class = PageNumberPagination
+
+    def get_queryset(self):
+        sort = self.request.GET.get("sort", "id")
+        number = self.request.GET.get("number", 1000000)
+        number = int(number)
+        if sort != "id":
+            sort = "-" + sort
+        qs = journalist_query_set
+        qs = qs.filter(
+            journalistsection__section__section_name=self.kwargs["section_name"]
+        ).order_by(sort)[:number]
+        return qs
+
+
+class JournalistRanking(generics.ListCreateAPIView):
+    serializer_class = JournalistSerializer
+    pagination_class = PageNumberPagination
+
+    def get_queryset(self):
+        sort = self.request.GET.get("sort", "id")
+        number = self.request.GET.get("number", 1000000)
+        number = int(number)
+        if sort != "id":
+            sort = "-" + sort
+        qs = journalist_query_set.order_by(sort)[:number]
+        return qs
 
 
 class JournalistDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Journalist.objects.all()
+    queryset = journalist_query_set
     serializer_class = JournalistSerializer
-    pagination_class = PostPageNumberPagination
     lookup_field = "journalist_id"
 
 
@@ -76,7 +200,7 @@ class SubscriberAgeDetail(generics.ListAPIView):
         return queryset
 
 
-class SubscribersAgeByPressNameView(generics.ListAPIView):
+class SubscribersAgeByPressName(generics.ListAPIView):
     serializer_class = PressSubscriberAgeSerializer
     pagination_class = PostPageNumberPagination
 
@@ -86,10 +210,11 @@ class SubscribersAgeByPressNameView(generics.ListAPIView):
         return queryset
 
 
-class AgeRankingByCategoryView(generics.ListAPIView):
+class AgePressRanking(generics.ListAPIView):
     serializer_class = AgeRankingByCategorySerializer
     pagination_class = PostPageNumberPagination
 
+    
     def get_queryset(self):
         age_ranges = [10, 20, 30, 40, 50, 60]
         result = []
@@ -109,13 +234,12 @@ class AgeRankingByCategoryView(generics.ListAPIView):
             press_ranking = sorted(
                 press_ranking, key=lambda x: x["count"], reverse=True
             )
-            press_ranking = press_ranking[:10]
+            press_ranking = press_ranking[:5]
             result.append({"age_group": age_group, "press_ranking": press_ranking})
 
         return result
 
     def get_age_subscriber_count(self, press, age_range):
-        # Calculate the age-based subscriber count for the given press and age range
         age_subscriber_count = (
             Press.objects.filter(id=press.id)
             .annotate(
@@ -147,59 +271,64 @@ class AgeRankingByCategoryView(generics.ListAPIView):
         return Response(serializer.data)
 
 
-# class AgeRankingByCategoryView(APIView):
-#     paginatoin_class = PostPageNumberPagination
+class CategoryWiseAgePressRanking(APIView):
+    paginatoin_class = PostPageNumberPagination
 
-#     def get(self, request):
-#         age_ranges = [10, 20, 30, 40, 50, 60]
-#         result = []
+    def get(self, request):
+        age = request.query_params.get('age')
 
-#         for age_range in age_ranges:
-#             age_group = f"{age_range}대"
-#             age_ranking = []
+        if age is not None:
+            age_ranges = [int(age)]
+        else:
+            age_ranges = [10, 20, 30, 40, 50, 60]
 
-#             for category in Category.objects.all():
-#                 category_name = category.category_name
-#                 category_press_ranking = (
-#                     Press.objects.annotate(
-#                         age_subscriber_count=Coalesce(
-#                             Sum(
-#                                 Case(
-#                                     When(
-#                                         journalist__age__age=age_range,
-#                                         then=F("journalist__subscriber_count")
-#                                         * F("journalist__age__percentage")
-#                                         / 100,
-#                                     ),
-#                                     default=Value(0),
-#                                     output_field=models.IntegerField(),
-#                                 )
-#                             ),
-#                             Value(0),
-#                         )
-#                     )
-#                     .filter(category=category)
-#                     .order_by("-age_subscriber_count")[:5]
-#                 )
+        result = []
 
-#                 category_ranking = {
-#                     "category_name": category_name,
-#                     "press_ranking": [
-#                         {
-#                             "press_name": press.press_name,
-#                             "count": press.age_subscriber_count,
-#                         }
-#                         for press in category_press_ranking
-#                     ],
-#                 }
+        for age_range in age_ranges:
+            age_group = f"{age_range}대"
+            age_ranking = []
 
-#                 age_ranking.append(category_ranking)
+            for category in Category.objects.all():
+                category_name = category.category_name
+                age_press_ranking = (
+                    Press.objects.annotate(
+                        age_subscriber_count=Coalesce(
+                            Sum(
+                                Case(
+                                    When(
+                                        journalist__age__age=age_range,
+                                        then=F("journalist__subscriber_count")
+                                        * F("journalist__age__percentage")
+                                        / 100,
+                                    ),
+                                    default=Value(0),
+                                    output_field=models.IntegerField(),
+                                )
+                            ),
+                            Value(0),
+                        )
+                    )
+                    .filter(category=category)
+                    .order_by("-age_subscriber_count")[:5]
+                )
 
-#             age_group_ranking = {"age_group": age_group, "categories": age_ranking}
+                category_ranking = {
+                    "category_name": category_name,
+                    "press_ranking": [
+                        {
+                            "press_name": press.press_name,
+                            "count": press.age_subscriber_count,
+                        }
+                        for press in age_press_ranking
+                    ],
+                }
 
-#             result.append(age_group_ranking)
+                age_ranking.append(category_ranking)
 
-#         return Response(result)
+            age_group_ranking = {"age_group": age_group, "categories": age_ranking}
+            result.append(age_group_ranking)
+
+        return Response(result)
 
 
 class TotalAgeByPress(generics.RetrieveAPIView):
