@@ -188,7 +188,7 @@ class SubscriberAgeList(generics.ListCreateAPIView):
     pagination_class = PostPageNumberPagination
 
 
-class SubscriberAgeDetail(generics.ListAPIView):
+class SubscriberAgeDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Age.objects.all()
     serializer_class = PressSubscriberAgeSerializer
     pagination_class = PostPageNumberPagination
