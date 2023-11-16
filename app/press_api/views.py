@@ -4,6 +4,7 @@ from rest_framework import generics
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from rest_framework.views import APIView
+
 from press.models import Age, Category, Gender, Journalist, Press, models
 from press_api.pagination import PostPageNumberPagination
 from press_api.serializer import (
@@ -16,6 +17,7 @@ from press_api.serializer import (
     PressSubscriberAgeSerializer,
     SectionSerializer,
 )
+
 from .queryset import (
     category_query_set,
     journalist_query_set,
@@ -178,10 +180,11 @@ class SubscriberAgeList(generics.ListCreateAPIView):
     pagination_class = PostPageNumberPagination
 
 
-class SubscriberAgeDetail(generics.RetrieveUpdateDestroyAPIView):
+class SubscriberAgeDetail(generics.ListAPIView):
     queryset = Age.objects.all()
     serializer_class = PressSubscriberAgeSerializer
     pagination_class = PostPageNumberPagination
+    lookup_field = "journalist_id"
 
     def get_queryset(self):
         journalist_id = self.kwargs["journalist_id"]
@@ -335,9 +338,19 @@ class TotalAgeByPress(generics.RetrieveAPIView):
 
         for age_range in age_ranges:
             age_group = f"{age_range}대"
-            total_subscribers = queryset.filter(age=age_range).aggregate(
-                total=Sum("percentage")
-            )["total"]
+            total_subscribers = queryset.filter(
+                journalist__age__age=age_range
+            ).aggregate(
+                total=Sum(
+                    (
+                        F("journalist__subscriber_count")
+                        * F("journalist__age__percentage")
+                    )
+                    / 100
+                )
+            )[
+                "total"
+            ]
             result.append(
                 {"age_group": age_group, "total_subscribers": total_subscribers}
             )
