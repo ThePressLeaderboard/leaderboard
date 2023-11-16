@@ -16,7 +16,12 @@ from press_api.serializer import (
     PressSubscriberAgeSerializer,
     SectionSerializer,
 )
-from .queryset import (category_query_set, journalist_query_set, press_query_set, secion_query_set)
+from .queryset import (
+    category_query_set,
+    journalist_query_set,
+    press_query_set,
+    secion_query_set,
+)
 
 
 class CategoryRanking(generics.ListCreateAPIView):
