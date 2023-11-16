@@ -16,6 +16,7 @@ from press_api.serializer import (
     PressSerializer,
     PressSubscriberAgeSerializer,
     SectionSerializer,
+    GenderSerializer
 )
 
 from .queryset import (
@@ -395,9 +396,9 @@ class FemalePressRanking(generics.ListAPIView):
 
 class JournalistGenderDetail(generics.ListAPIView):
     queryset = Journalist.objects.all()
-    serializer_class = PressGenderSerializer
+    serializer_class = GenderSerializer
 
     def get_queryset(self):
-        journalist_id = self.kwargs.get("pk")
+        journalist_id = self.kwargs.get("journalist_id")
         queryset = Gender.objects.filter(journalist_id=journalist_id)
         return queryset
