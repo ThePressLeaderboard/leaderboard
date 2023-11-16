@@ -24,9 +24,8 @@ from .views import (
 
 urlpatterns = [
     path("category", CategoryRanking.as_view(), name="categoryranking"),
-    path("category/<str:category_name>/",
-        CategoryDetail.as_view(),
-        name="categorydetail"
+    path(
+        "category/<str:category_name>/", CategoryDetail.as_view(), name="categorydetail"
     ),
     path(
         "category/<str:category_name>/press",
@@ -39,10 +38,7 @@ urlpatterns = [
         name="categoryjournalistranking",
     ),
     path("press", PressRanking.as_view(), name="pressranking"),
-    path(
-        "press/<str:press_name>/",
-        PressDetail.as_view(),
-        name="press"),
+    path("press/<str:press_name>/", PressDetail.as_view(), name="press"),
     path(
         "press/<str:press_name>/journalist/",
         PressJournallistRanking.as_view(),

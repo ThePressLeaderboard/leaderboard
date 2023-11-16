@@ -1,10 +1,8 @@
-from django.db.models import F, Sum
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
 
-from press.models import Gender, Press, models
-
+from press.models import Category
 
 # class MalePressRankingTest(APITestCase):
 #     def setUp(self):
@@ -83,126 +81,105 @@ from press.models import Gender, Press, models
 #         data = response.json()
 #         self.assertEqual(len(data), len(genders))
 
-#         for item in data:
-#             gender = Gender.objects.get(id=item["id"])
-#             self.assertIn(gender, genders)
-from django.urls import reverse
-from rest_framework import status
-from rest_framework.test import APITestCase
-from press.models import Category, Press, Journalist
-
 
 class CategoryRankingTest(APITestCase):
-
     def test_get_queryset(self):
-        url = reverse('categoryranking')
+        url = reverse("categoryranking")
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-
 
     def test_get_queryset_with_sort(self):
-        url = reverse('categoryranking') + '?sort=category_name'
+        url = reverse("categoryranking") + "?sort=category_name"
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-
 
     def test_get_queryset_with_number(self):
-        url = reverse('categoryranking') + '?number=2'  
+        url = reverse("categoryranking") + "?number=2"
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-
 
 
 class CategoryDetailTest(APITestCase):
     def test_get_category_detail(self):
-        # 이미 데이터베이스에 존재하는 카테고리를 사용
-        category_name = '종합지'
+        category_name = "종합지"
         Category.objects.create(category_name=category_name)
 
-        url = reverse('categorydetail', args=[category_name])
+        url = reverse("categorydetail", args=[category_name])
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data['category_name'], category_name)
+        self.assertEqual(response.data["category_name"], category_name)
 
     def test_delete_category_detail(self):
-        # 이미 데이터베이스에 존재하는 카테고리를 사용
-        category_name = '종합지'
+        category_name = "종합지"
         Category.objects.create(category_name=category_name)
 
-        url = reverse('categorydetail', args=[category_name])
+        url = reverse("categorydetail", args=[category_name])
         response = self.client.delete(url)
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
-        # 삭제된 카테고리를 다시 가져오려고 시도할 때 404를 반환해야 함
-        url_after_delete = reverse('categorydetail', args=[category_name])
+        url_after_delete = reverse("categorydetail", args=[category_name])
         response_after_delete = self.client.get(url_after_delete)
         self.assertEqual(response_after_delete.status_code, status.HTTP_404_NOT_FOUND)
 
 
-
 class CategoryPressRankingTest(APITestCase):
-
     def test_get_category_press_ranking(self):
-        category_name = '종합지'
-        url = reverse('categorypressranking', args=[category_name])
+        category_name = "종합지"
+        url = reverse("categorypressranking", args=[category_name])
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-
 
     def test_get_category_press_ranking_with_sort(self):
-        category_name = '종합지'
-        url = reverse('categorypressranking', args=[category_name]) + '?sort=press_name'
+        category_name = "종합지"
+        url = reverse("categorypressranking", args=[category_name]) + "?sort=press_name"
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-
 
     def test_get_category_press_ranking_with_number(self):
-        category_name = '종합지'
-        url = reverse('categorypressranking', args=[category_name]) + '?number=2'
+        category_name = "종합지"
+        url = reverse("categorypressranking", args=[category_name]) + "?number=2"
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-
 
 
 class CategoryJournalistRankingTest(APITestCase):
     def test_get_category_journalist_ranking(self):
-        category_name = '종합지'
-        url = reverse('categoryjournalistranking', args=[category_name])
+        category_name = "종합지"
+        url = reverse("categoryjournalistranking", args=[category_name])
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_get_category_journalist_ranking_with_sort(self):
-        category_name = '종합지'
-        url = reverse('categoryjournalistranking', args=[category_name]) + '?sort=name'
+        category_name = "종합지"
+        url = reverse("categoryjournalistranking", args=[category_name]) + "?sort=name"
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_get_category_journalist_ranking_with_number(self):
-        category_name = '종합지'
-        url = reverse('categoryjournalistranking', args=[category_name]) + '?number=2'
+        category_name = "종합지"
+        url = reverse("categoryjournalistranking", args=[category_name]) + "?number=2"
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-
 
 
 class PressRankingTest(APITestCase):
     def test_get_category_press_ranking(self):
-        url = reverse('pressranking')
+        url = reverse("pressranking")
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_get_category_press_ranking_with_sort(self):
-        url = reverse('pressranking') + '?sort=press_name'
+        url = reverse("pressranking") + "?sort=press_name"
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_get_category_press_ranking_with_number(self):
-        url = reverse('pressranking') + '?number=2'
+        url = reverse("pressranking") + "?number=2"
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
 
-'''
+"""
 
 #######################에러가 있어서 수정해야함##########################
 
@@ -213,11 +190,10 @@ class PressDetailTest(APITestCase):
         press_name = '국민일보'
         url = reverse('pressdetail', args=[press_name])
         response = self.client.get(url)
-        print() 
         print(response.data)
         self.assertEqual(response.data['press_name'], self.press)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-    
+
 
     # def test_get_category_detail(self):
     #     # 이미 데이터베이스에 존재하는 카테고리를 사용
@@ -236,64 +212,58 @@ class PressDetailTest(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
         # Press 데이터가 실제로 삭제되었는지 확인하는 코드 추가
 
-'''
+"""
+
 
 class PressJournallistRankingTest(APITestCase):
     def test_get_category_journalist_ranking(self):
-        press_name = '국민일보'
-        url = reverse('pressjournalistranking', args=[press_name])
+        press_name = "국민일보"
+        url = reverse("pressjournalistranking", args=[press_name])
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        # 기대되는 응답 형태와 데이터가 맞는지 확인하는 코드 추가
 
     def test_get_category_journalist_ranking_with_sort(self):
-        press_name = '동아일보'
-        url = reverse('pressjournalistranking', args=[press_name]) + '?sort=name'
+        press_name = "동아일보"
+        url = reverse("pressjournalistranking", args=[press_name]) + "?sort=name"
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        # 기대되는 응답 형태와 데이터가 맞는지 확인하는 코드 추가
 
     def test_get_category_journalist_ranking_with_number(self):
-        press_name = '문화일보'
-        url = reverse('pressjournalistranking', args=[press_name]) + '?number=2'
+        press_name = "문화일보"
+        url = reverse("pressjournalistranking", args=[press_name]) + "?number=2"
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        # 기대되는 응답 형태와 데이터가 맞는지 확인하는 코드 추가
 
 
 class SectionRankingTest(APITestCase):
     def test_get_section_ranking(self):
-        url = reverse('sectionranking')
+        url = reverse("sectionranking")
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        # 기대되는 응답 형태와 데이터가 맞는지 확인하는 코드 추가
 
     def test_get_section_ranking_with_sort(self):
-        url = reverse('sectionranking') + '?sort=section_name'
+        url = reverse("sectionranking") + "?sort=section_name"
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        # 기대되는 응답 형태와 데이터가 맞는지 확인하는 코드 추가
 
     def test_get_section_ranking_with_number(self):
-        url = reverse('sectionranking') + '?number=2'
+        url = reverse("sectionranking") + "?number=2"
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        # 기대되는 응답 형태와 데이터가 맞는지 확인하는 코드 추가
 
 
-'''
+"""
 
 #######################에러가 있어서 수정해야함##########################
 
 class SectionDetailTest(APITestCase):
     def setUp(self):
         self.section_name = '경제'
-    
+
     def test_get_section_detail(self):
         url = reverse('sectiondetail', args=['경제'])
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        # 기대되는 응답 형태와 데이터가 맞는지 확인하는 코드 추가
         self.assertEqual(response.data['section_name'], self.section_name)
 
     def test_delete_section_detail(self):
@@ -301,117 +271,113 @@ class SectionDetailTest(APITestCase):
         response = self.client.delete(url)
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
-        # 삭제된 섹션을 다시 가져오려고 시도할 때 404를 반환해야 함
         url_after_delete = reverse('sectiondetail', args=[self.section_name])
         response_after_delete = self.client.get(url_after_delete)
         self.assertEqual(response_after_delete.status_code, status.HTTP_404_NOT_FOUND)
-'''
+"""
+
 
 class SectionJournallistRankingTest(APITestCase):
     def setUp(self):
-        self.section_name = '경제'
+        self.section_name = "경제"
 
     def test_get_section_journalist_ranking(self):
-        url = reverse('setionjournalistranking', args=[self.section_name])
+        url = reverse("setionjournalistranking", args=[self.section_name])
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        # 기대되는 응답 형태와 데이터가 맞는지 확인하는 코드 추가
 
     def test_get_section_journalist_ranking_with_sort(self):
-        url = reverse('setionjournalistranking', args=[self.section_name]) + '?sort=name'
+        url = (
+            reverse("setionjournalistranking", args=[self.section_name]) + "?sort=name"
+        )
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        # 기대되는 응답 형태와 데이터가 맞는지 확인하는 코드 추가
 
     def test_get_section_journalist_ranking_with_number(self):
-        url = reverse('setionjournalistranking', args=[self.section_name]) + '?number=2'
+        url = reverse("setionjournalistranking", args=[self.section_name]) + "?number=2"
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        # 기대되는 응답 형태와 데이터가 맞는지 확인하는 코드 추가
-
 
 
 class JournalistRankingTest(APITestCase):
     def test_get_journalist_ranking(self):
-        # 정상적인 경우의 테스트
-        url = reverse('journalistranking')  # 해당 URL에 대한 이름이 정의되어 있어야 함
+        url = reverse("journalistranking")
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_get_journalist_ranking_with_sort(self):
-        # 정렬을 적용한 경우의 테스트
-        url = reverse('journalistranking') + '?sort=subscriber_count'
+        url = reverse("journalistranking") + "?sort=subscriber_count"
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_get_journalist_ranking_with_number(self):
-        # 특정 개수만큼 결과를 가져오는 경우의 테스트
-        url = reverse('journalistranking') + '?number=2'
+        url = reverse("journalistranking") + "?number=2"
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
 
-'''
+"""
 
 #######################에러가 있어서 수정해야함##########################
 
 class JournalistDetailTest(APITestCase):
     def setUp(self):
         self.journalist_id = 77078
-    
+
     def test_get_journalist_detail(self):
-        # 특정 기자의 상세 정보를 가져오는 경우의 테스트
         url = reverse('journalistdetail', args=[self.journalist_id])
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_delete_journalist_detail(self):
-        # 특정 기자의 정보를 삭제하는 경우의 테스트
         url = reverse('journalistdetail', args=[self.journalist_id])
         response = self.client.delete(url)
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
-        # 삭제된 기자를 다시 가져오려고 시도할 때 404를 반환해야 함
         response_after_delete = self.client.get(url)
         self.assertEqual(response_after_delete.status_code, status.HTTP_404_NOT_FOUND)
-'''
+"""
 
 
 class SubscriberAgeDetailTest(APITestCase):
     def test_get_subscriber_age_detail(self):
-        # 특정 기자의 구독자 연령대 리스트를 가져오는 경우의 테스트
-        url = reverse('subscribers-age-detail', args=[1])  # 해당 URL에 대한 이름이 정의되어 있어야 함
+        url = reverse("subscribers-age-detail", args=[1])
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-
 
 
 class CategoryWiseAgePressRankingTest(APITestCase):
     def test_get_category_wise_age_press_ranking(self):
-        url = reverse('press-ranking-by-categoryage')
+        url = reverse("press-ranking-by-categoryage")
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-
 
 
 class TotalAgeByPressTest(APITestCase):
     def test_get_total_age_by_press(self):
-        url = reverse('press-ranking-by-age')
+        url = reverse("press-ranking-by-age")
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-
 
 
 class MalePressRankingTest(APITestCase):
     def test_get_male_press_ranking(self):
-        url = reverse('male-press-ranking')
+        url = reverse("male-press-ranking")
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-
 
 
 class FemalePressRankingTest(APITestCase):
     def test_get_male_press_ranking(self):
-        url = reverse('female-press-ranking')
+        url = reverse("female-press-ranking")
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+
+class JournalistGenderDetailTest(APITestCase):
+    def test_get_journalist_gender_detail(self):
+        url = reverse("journalistgenderdetail", args=[self.journalist.pk])
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data), 1)
+        self.assertEqual(response.data[0]["gender"], "M")
