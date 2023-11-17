@@ -25,7 +25,7 @@ from .views import (
 urlpatterns = [
     path("category", CategoryRanking.as_view(), name="categoryranking"),
     path(
-        "category/<path:category_name>/",
+        "category/<path:category_name>",
         CategoryDetail.as_view(),
         name="categorydetail",
     ),
@@ -42,7 +42,7 @@ urlpatterns = [
     path("press", PressRanking.as_view(), name="pressranking"),
     path("press/<str:press_name>/", PressDetail.as_view(), name="press"),
     path(
-        "press/<str:press_name>/journalist/",
+        "press/<str:press_name>/journalist",
         PressJournallistRanking.as_view(),
         name="pressjournalistranking",
     ),
@@ -55,17 +55,17 @@ urlpatterns = [
     ),
     path("journalist/", JournalistRanking.as_view(), name="journalistranking"),
     path(
-        "journalist/<int:journalist_id>/",
+        "journalist/<int:journalist_id>",
         JournalistDetail.as_view(),
         name="journalistdetail",
     ),
     path(
-        "journalist/<int:journalist_id>/subscriberage/",
+        "journalist/<int:journalist_id>/subscriberage",
         SubscriberAgeDetail.as_view(),
         name="subscribers-age-detail",
     ),
     path(
-        "press/ranking/categoryage/",
+        "press/ranking/categoryage",
         AgePressRanking.as_view(),
         name="press-ranking-by-categoryage",
     ),
@@ -75,7 +75,7 @@ urlpatterns = [
         name="press-ranking-by-age",
     ),
     path(
-        "press/<str:press_name>/age/",
+        "press/<str:press_name>/age",
         TotalAgeByPress.as_view(),
         name="age-distribution-by-press-name",
     ),
