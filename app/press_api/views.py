@@ -10,13 +10,13 @@ from press_api.pagination import PostPageNumberPagination
 from press_api.serializer import (
     AgeRankingByCategorySerializer,
     CategorySerializer,
+    GenderSerializer,
     JournalistSerializer,
     PressAgeSerializer,
     PressGenderSerializer,
     PressSerializer,
     PressSubscriberAgeSerializer,
     SectionSerializer,
-    GenderSerializer
 )
 
 from .queryset import (
