@@ -347,7 +347,7 @@ class TotalAgeByPress(generics.RetrieveAPIView):
                         F("journalist__subscriber_count")
                         * F("journalist__age__percentage")
                     )
-                    / 100
+                    / (100 * 6)
                 )
             )[
                 "total"
