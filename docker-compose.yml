@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  press:
+    build: ./app
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./app/:/usr/src/app/
+    ports:
+      - 8555:8000
+    env_file:
+      - ./app/.env.dev
+    depends_on:
+      - press_db
+  press_db:
+    image: postgres:16
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=de
+      - POSTGRES_PASSWORD=1234
+      - POSTGRES_DB=press_dev
+
+volumes:
+  postgres_data:
