@@ -25,15 +25,15 @@ from .views import (
 urlpatterns = [
     path("category", CategoryRanking.as_view(), name="categoryranking"),
     path(
-        "category/<str:category_name>/", CategoryDetail.as_view(), name="categorydetail"
+        "category/<path:category_name>/", CategoryDetail.as_view(), name="categorydetail"
     ),
     path(
-        "category/<str:category_name>/press",
+        "category/<path:category_name>/press",
         CategoryPressRanking.as_view(),
         name="categorypressranking",
     ),
     path(
-        "category/<str:category_name>/journalist",
+        "category/<path:category_name>/journalist",
         CategoryJournalistRanking.as_view(),
         name="categoryjournalistranking",
     ),
@@ -45,9 +45,9 @@ urlpatterns = [
         name="pressjournalistranking",
     ),
     path("section", SectionRanking.as_view(), name="sectionranking"),
-    path("section/<str:section_name>/", SectionDetail.as_view(), name="sectiondetail"),
+    path("section/<path:section_name>/", SectionDetail.as_view(), name="sectiondetail"),
     path(
-        "section/<str:section_name>/journalist",
+        "section/<path:section_name>/journalist",
         SectionJournallistRanking.as_view(),
         name="setionjournalistranking",
     ),
