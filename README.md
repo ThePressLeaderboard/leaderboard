@@ -9,6 +9,10 @@
 
 - 2023년 11월 6일부터 2023년 11월 10일까지
 
+### 프로젝트 소개 자료
+- [시연영상](https://www.youtube.com/watch?v=aNAHPZJP-Zw)
+- [Slide](https://www.miricanvas.com/ko/v/12mag56)
+
 ### 팀원
 
 | 이름   | 역할               |
