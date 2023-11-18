@@ -59,6 +59,9 @@
 위의 ERD를 기반으로 Selenium, BeautifulSoup, Requests를 활용하여 카테고리, 언론사, 기자, 연령, 성별에 대한 정보를 수집하고 CSV 파일로 생성합니다.
 
 ![CSV 파일](https://github.com/ThePressLeaderboard/leaderboard/assets/88651495/3c1164c8-ee29-45f0-a166-963b249c8e65)
+<br></br>
+![image](https://github.com/ThePressLeaderboard/leaderboard/assets/88651495/f852affa-1a99-4836-aa08-b62121762070)
+
 
 ### 3. Django
 
